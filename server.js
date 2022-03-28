@@ -30,12 +30,12 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     }
   
     async function prueba(agent) {
-        let firstName = req.body.queryResult.parameters.firstName;
-        let email = req.body.queryResult.parameters.email;
+        let nombre = req.body.queryResult.parameters.firstName;
+        let correo = req.body.queryResult.parameters.email;
       
-        let chatbotUser = new ChatbotUser( firstName, email)({
-          firstName,
-          email,
+        let chatbotUser = new ChatbotUser({
+          firstName : nombre,
+          email : correo,
         });
         try {
           let reg = await chatbotUser.save();
@@ -43,7 +43,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         } catch ( err ) {
           console.log( err );
         }
-        agent.add(`Tu nombre es ${firstName} y tu email es ${email}`)
+        agent.add(`Tu nombre es ${ nombre } y tu email es ${ correo }`)
     }
 
     // Run the proper function handler based on the matched Dialogflow intent name
