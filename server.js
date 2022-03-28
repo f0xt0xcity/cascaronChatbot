@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
+const fetch = require('node-fetch');
 
 
 const ChatbotUser = require('./Models/ChatbotUsers');
