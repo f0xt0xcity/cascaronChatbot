@@ -10,11 +10,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "dialogflow-fulfillment": "^0.6.1",
     "actions-on-google": "^3.0.0",
     "mongoose": "^6.2.8",
-    "node-fetch" : "^3.2.3"
+    "node-fetch": "^2.6.0"
   },
   "engines": {
     "node": "12.x"

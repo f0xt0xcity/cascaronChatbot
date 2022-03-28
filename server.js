@@ -50,9 +50,9 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     }
   
    function api(agent){
-    fetch('https://www.breakingbadapi.com/api/quote/random')
-    .then(res => res.text())
-    .then(text => console.log(text));
+    fetch("https://swapi.co/api/people/3")
+    .then(promesaFetch => promesaFetch.json())
+    .then(contenido => console.log(contenido));
     
     agent.add( "hola" );
   }
