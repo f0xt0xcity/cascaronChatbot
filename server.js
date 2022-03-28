@@ -53,13 +53,16 @@ app.post('/webhook', express.json() ,function ( req, res ) {
      let respuesta;
      let pokemon = req.body.queryResult.parameters.pokemon;
      try {
+       agent.add('Aquí tienes la información')
        await fetch(`https://pokeapi.co/api/v2/pokemon/${ pokemon }`)
       .then(promesaFetch => promesaFetch.json())
       .then(contenido => { respuesta = contenido });
        agent.add(  new Card({
          title : `${respuesta.name}`,
-         imageUrl : respuesta.sprites.back_default,
-         text : `Hola mi nombre es ${ pokemon } y soy un pokemon`
+         imageUrl : respuesta.sprites.front_default,
+         text : `Hola mi nombre es ${ pokemon } y soy un pokemon`,
+         buttonText : `Mas informacion sobre ${ pokemon }`,
+         buttonUrl : `https://www.google.com/search?q=${ pokemon }`
        })  );
      } catch(err) {
        console.log(err);
