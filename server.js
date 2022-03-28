@@ -5,7 +5,8 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
-const { WebhookClient } = require('dialogflow-fulfillment');
+const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
+
 
 
 app.post('/webhook', express.json() ,function ( req, res ) {
@@ -23,8 +24,16 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     }
   
     function prueba(agent) {
-      let origen = req.body.originalDetectIntentRequest.source;
-      agent.add( origen );
+        let origen = req.body.originalDetectIntentRequest.source;
+        agent.add( new Card({
+            title : 'Titulo de prueba',
+            imageUrl : 'https://dialogflow.com/google.png',
+            text : 'texto de prueba',
+            buttonText :'boton',
+            buttonUrl : 'https://google.com'
+            }) 
+        );
+        agent.add( new Suggestion('respuesta rapida'));
     }
 
     // Run the proper function handler based on the matched Dialogflow intent name
