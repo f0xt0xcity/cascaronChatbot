@@ -8,11 +8,13 @@ router.get("/chatbot", (req, res) => {
 
 router.post("/products", (req, res) => {
   
+  console.log( req );
+  
   let product = new Product({
-    name: body.name,
-    description: body.description,
-    price: body.price,
-    img: body.img,
+    name: req.body.name,
+    description: req.body.description,
+    price: req.body.price,
+    img: req.body.img,
   });
   product.save((err, productDB) => {
     if (err) return res.json({ ok: false, msg: "Hubo un error" });
