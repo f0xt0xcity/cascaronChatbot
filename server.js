@@ -49,13 +49,16 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         agent.add(`Tu nombre es ${ nombre } y tu email es ${ correo }`)
     }
   
-   function api(agent){
-     let respuesta = '';
-    fetch("https://www.breakingbadapi.com/api/quote/random")
+   async function api(agent){
+     
+     const consultarApi = () => {
+       fetch("https://www.breakingbadapi.com/api/quote/random")
       .then(promesaFetch => promesaFetch.json())
-      .then(contenido => respuesta = contenido[0].quote);
-    console.log(respuesta);
-    agent.add( respuesta );
+      .then(contenido => console.log(contenido[0].quote));
+    }
+     const respuesta = await consultarApi();
+     console.log( respuesta );
+    agent.add( 'respuesta' );
   }
 
     // Run the proper function handler based on the matched Dialogflow intent name
