@@ -56,12 +56,15 @@ app.post('/webhook', express.json() ,function ( req, res ) {
        await fetch(`https://pokeapi.co/api/v2/pokemon/${ pokemon }`)
       .then(promesaFetch => promesaFetch.json())
       .then(contenido => { respuesta = contenido });
-       console.log( respuesta.sprites.back_default );
-     } catch(erro) {
-       agent.add('')
-     }  
-     
-    agent.add( 'hola' );
+       agent.add(  new Card({
+         title : `${respuesta.name}`,
+         imageUrl : respuesta.sprites.back_default,
+         text : `Hola mi nombre es ${ pokemon } y soy un pokemon`
+       })  );
+     } catch(err) {
+       console.log(err);
+       agent.add(`No se ha encontrado el pokemon ${ pokemon }`)
+     }
   }
 
     // Run the proper function handler based on the matched Dialogflow intent name
