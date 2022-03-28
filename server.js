@@ -48,12 +48,21 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         }
         agent.add(`Tu nombre es ${ nombre } y tu email es ${ correo }`)
     }
+  
+   function api(agent){
+    fetch('https://www.breakingbadapi.com/api/quote/random')
+    .then(res => res.text())
+    .then(text => console.log(text));
+    
+    agent.add( "hola" );
+  }
 
     // Run the proper function handler based on the matched Dialogflow intent name
     let intentMap = new Map();
     intentMap.set('Default Welcome Intent', welcome);
     intentMap.set('Default Fallback Intent', fallback);
     intentMap.set('prueba', prueba);
+    intentMap.set('api', api);
 
     agent.handleRequest(intentMap);
 });
