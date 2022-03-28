@@ -29,10 +29,20 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         agent.add(`I'm sorry, can you try again?`);
     }
   
-    function prueba(agent) {
+    async function prueba(agent) {
         let firstName = req.body.queryResult.parameters.firstName;
         let email = req.body.queryResult.parameters.email;
       
+        let chatbotUser = new ChatbotUser( firstName, email)({
+          firstName,
+          email,
+        });
+        try {
+          let reg = await chatbotUser.save();
+          console.log( reg );
+        } catch ( err ) {
+          console.log( err );
+        }
         agent.add(`Tu nombre es ${firstName} y tu email es ${email}`)
     }
 
