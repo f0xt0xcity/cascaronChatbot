@@ -7,12 +7,17 @@ router.get('/', (req, res) => {
   res.json({ ok : true, msg : 'Esto esta funcionando'});
 });
 
+router.get('/products', (req, res) => {
+  res.json({ ok : true, msg : 'Esto esta funcionando'});
+});
+
+
 router.post('/products', ( req, res) => {
   
   let body = req.body;
   
   let product = new Product({
-      nameProduct : body.nameProduct,
+      name : body.name,
       description : body.description,
       price : body.price,
       img : body.img
