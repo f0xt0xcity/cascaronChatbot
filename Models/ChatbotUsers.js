@@ -6,7 +6,7 @@ const ObjectId = Schema.ObjectId;
 const ChatbotUserSchema = new Schema(
   {
     firtsName : String,
-    lastName : String,
+    email : String,
   }, { timestamps : true }
 );
 
