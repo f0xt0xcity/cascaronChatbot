@@ -51,11 +51,17 @@ app.post('/webhook', express.json() ,function ( req, res ) {
   
    async function api(agent){
      let respuesta;
-     await fetch("https://www.breakingbadapi.com/api/quote/random")
+     let pokemon = req.body.queryResult.parameters.pokemon;
+     try {
+       await fetch(`https://pokeapi.co/api/v2/pokemon/${ pokemon }`)
       .then(promesaFetch => promesaFetch.json())
       .then(contenido => { respuesta = contenido });
+       console.log( respuesta.sprites.back_default );
+     } catch(erro) {
+       agent.add('')
+     }  
      
-    agent.add( respuesta[0].quote );
+    agent.add( 'hola' );
   }
 
     // Run the proper function handler based on the matched Dialogflow intent name
