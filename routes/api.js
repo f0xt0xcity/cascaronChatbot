@@ -17,18 +17,16 @@ router.post('/products', ( req, res) => {
       price : body.price,
       img : body.img
     });
-  try {
-    product.save();
+  product.save( ( err, productDB ) => {
+    if ( err ) return res.json({ ok : false, msg : 'Hubo un error'});
+    
+    
     res.json({
-      ok : true,
-      msg : 'Producto creado correctamente',
-    })
-  } catch( err ) {
-    res.json({
-      ok : false,
-      msg : 'Hubo un error',
-    })
-  }
+     ok : true,
+      msg : 'Producto añadido correctamente',
+      product : productDB
+    });
+  });
 });
 
 module.exports = router;
