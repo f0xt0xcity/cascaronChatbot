@@ -1,13 +1,10 @@
-// server.js
-// where your node app starts
-
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
 
+
+const ChatbotUsers 
 
 mongoose.connect('mongodb+srv://manueloct77:3uropa26_78@dialogflowcluster.15dxq.mongodb.net/chatbotDB?retryWrites=true&w=majority', 
   (err, res) => {
@@ -32,16 +29,10 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     }
   
     function prueba(agent) {
-        let origen = req.body.originalDetectIntentRequest.source;
-        agent.add( new Card({
-            title : 'Titulo de prueba',
-            imageUrl : 'https://dialogflow.com/google.png',
-            text : 'texto de prueba',
-            buttonText :'boton',
-            buttonUrl : 'https://google.com'
-            }) 
-        );
-        agent.add( new Suggestion('respuesta rapida'));
+        let firstName = req.body.queryResult.parameters.firstName;
+        let email = req.body.queryResult.parameters.email;
+      
+        agent.add(`Tu nombre es ${firstName} y tu email es ${email}`)
     }
 
     // Run the proper function handler based on the matched Dialogflow intent name
