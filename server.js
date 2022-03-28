@@ -53,7 +53,8 @@ app.post('/webhook', express.json() ,function ( req, res ) {
      let respuesta;
      let pokemon = req.body.queryResult.parameters.pokemon;
      try {
-       agent.add('Aquí tienes la información')
+       agent.add('Aquí tienes la información');
+       agent.add(`${Math.round(Math.random()*(151-0)+parseInt(0))}`)
        await fetch(`https://pokeapi.co/api/v2/pokemon/${ pokemon }`)
       .then(promesaFetch => promesaFetch.json())
       .then(contenido => { respuesta = contenido });
@@ -67,7 +68,28 @@ app.post('/webhook', express.json() ,function ( req, res ) {
      } catch(err) {
        console.log(err);
        agent.add(`No se ha encontrado el pokemon ${ pokemon }`)
-     }
+       }
+    }
+  
+  async function pokemonAzar( agent ){
+    let respuesta;
+     try {
+       agent.add('Aquí tienes la información');
+       let azar = Math.round(Math.random()*(151));
+       await fetch(`https://pokeapi.co/api/v2/pokemon/${ azar }`)
+      .then(promesaFetch => promesaFetch.json())
+      .then(contenido => { respuesta = contenido });
+       agent.add(  new Card({
+         title : `${respuesta.name}`,
+         imageUrl : respuesta.sprites.front_default,
+         text : `Hola mi nombre es ${ respuesta.name } y soy un pokemon`,
+         buttonText : `Mas informacion sobre ${ respuesta.name }`,
+         buttonUrl : `https://www.google.com/search?q=${ respuesta.name }`
+       })  );
+     } catch(err) {
+       console.log(err);
+       agent.add(`Por el momento no puedo darte información`)
+       }
   }
 
     // Run the proper function handler based on the matched Dialogflow intent name
@@ -76,6 +98,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     intentMap.set('Default Fallback Intent', fallback);
     intentMap.set('prueba', prueba);
     intentMap.set('api', api);
+    intentMap.set('pokemonAzar', pokemonAzar);
 
     agent.handleRequest(intentMap);
 });
