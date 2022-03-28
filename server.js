@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
 
 
-const ChatbotUsers 
+const ChatbotUser = require('./Models/ChatbotUsers');
+
 
 mongoose.connect('mongodb+srv://manueloct77:3uropa26_78@dialogflowcluster.15dxq.mongodb.net/chatbotDB?retryWrites=true&w=majority', 
   (err, res) => {
