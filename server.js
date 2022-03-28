@@ -5,9 +5,16 @@
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
 const express = require("express");
 const app = express();
+const mongoose = require('mongoose');
 const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
 
 
+mongoose.connect('', {
+  useNewUrlParser : true,
+  useUnifiedTopology : true,
+  useFindAndModify : false,
+  useCreateIndex : true
+});
 
 app.post('/webhook', express.json() ,function ( req, res ) {
     const agent = new WebhookClient({ request: req, response: res });
