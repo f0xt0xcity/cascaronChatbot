@@ -9,12 +9,13 @@ router.get('/', (req, res) => {
 
 router.post('/products', ( req, res) => {
   
+  let body = req.body;
   
   let product = new Product({
-      name : req.body.name,
-      description : req.body.description,
-      price : req.body.price,
-      img : req.body.img
+      nameProduct : body.nameProduct,
+      description : body.description,
+      price : body.price,
+      img : body.img
     });
   try {
     product.save();

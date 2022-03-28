@@ -15,6 +15,8 @@ mongoose.connect('mongodb+srv://manueloct77:3uropa26_78@dialogflowcluster.15dxq.
   } 
 );
 
+app.use('/api', require('./routes/api'));
+
 app.post('/webhook', express.json() ,function ( req, res ) {
     const agent = new WebhookClient({ request: req, response: res });
     console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
@@ -54,8 +56,6 @@ app.post('/webhook', express.json() ,function ( req, res ) {
 
     agent.handleRequest(intentMap);
 });
-
-app.use('/api', require('./routes/api'))
 
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
