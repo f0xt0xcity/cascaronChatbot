@@ -11,10 +11,10 @@ router.post("/products", (req, res) => {
   console.log( req );
   
   let product = new Product({
-    name: req.body.name,
-    description: req.body.description,
-    price: req.body.price,
-    img: req.body.img,
+    name: req.query.name,
+    description: req.query.description,
+    price: req.query.price,
+    img: req.query.img,
   });
   product.save((err, productDB) => {
     if (err) return res.json({ ok: false, msg: "Hubo un error" });
