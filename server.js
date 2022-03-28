@@ -55,6 +55,8 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     agent.handleRequest(intentMap);
 });
 
+app.use('/api', require('./routes/api'))
+
 // listen for requests :)
 const listener = app.listen(process.env.PORT, () => {
   console.log("Your app is listening on port " + listener.address().port);
