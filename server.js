@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
 const fetch = require('node-fetch');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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');
 
 
 const ChatbotUser = require('./Models/ChatbotUsers');
@@ -48,6 +50,17 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         } catch ( err ) {
           console.log( err );
         }
+      
+      const msg = {
+          to: `${ correo }`, // Change to your recipient
+          from: 'polloklaser@gmail.com', // Change to your verified sender
+          subject: 'Se ha recibido tu problema',
+          text: 'Gracias por notificarnos, con tu ayuda cada vez ofrecemos un mejor servicio',
+          html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+        }
+        sgMail
+          .send(msg)
+      
         agent.add(`Gracias ${ nombre }, se ha enviado un comprobante de tu problema a ${ correo }.`)
     }
   
