@@ -15,7 +15,7 @@
     "actions-on-google": "^3.0.0",
     "mongoose": "^6.2.8",
     "node-fetch": "^2.6.0",
-    "@sendgrid/mail" : "7.4.8"
+    "@sendgrid/mail" : "^7.4.8"
   },
   "engines": {
     "node": "12.x"

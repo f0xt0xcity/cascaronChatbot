@@ -52,7 +52,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         }
       
       const msg = {
-          to: `${ correo }`, // Change to your recipient
+          to: correo, // Change to your recipient
           from: 'polloklaser@gmail.com', // Change to your verified sender
           templateId : 'd-95110ce9a5754981bef94bafb6ed9e1c',
           dynamic_template_data : { nombre }
