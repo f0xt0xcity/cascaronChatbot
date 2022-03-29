@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
-const { WebhookClient, Card, Suggestion } = require('dialogflow-fulfillment');
+const dfff = require('dialogflow-fulfillment');
+const { WebhookClient, Card, Suggestion, Payload } = require('dialogflow-fulfillment');
 const fetch = require('node-fetch');
 
 
@@ -20,8 +21,6 @@ app.use("/api", require("./routes/api"));
 
 app.post('/webhook', express.json() ,function ( req, res ) {
     const agent = new WebhookClient({ request: req, response: res });
-    console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
-    console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
     
     function welcome(agent) {
         agent.add(`Welcome to my agent!`);
@@ -95,8 +94,29 @@ app.post('/webhook', express.json() ,function ( req, res ) {
   }
   
   function testRichResponse( agent ){
-    agent.add('Mensaje enriquecido');
-    agent.add( new Suggestion('Quiero levantar un reporte'));
+    agent.add('respuesta enriquecida');
+    let payloadData ={
+  "richContent": [
+    [
+      {
+        "type": "chips",
+        "options": [
+          {
+            "text": "Realizar un reporte"
+          },
+          {
+            "text": "Quiero informacion sobre un pokemon"
+          },
+          {
+            "text": "Pokemon al azar"
+          }
+        ]
+      }
+    ]
+  ]
+}
+
+agent.add( new Payload( platform.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPAyload : true }));
   }
 
     // Run the proper function handler based on the matched Dialogflow intent name
