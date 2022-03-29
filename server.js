@@ -54,9 +54,8 @@ app.post('/webhook', express.json() ,function ( req, res ) {
       const msg = {
           to: `${ correo }`, // Change to your recipient
           from: 'polloklaser@gmail.com', // Change to your verified sender
-          subject: 'Se ha recibido tu problema',
-          text: 'Gracias por notificarnos, con tu ayuda cada vez ofrecemos un mejor servicio',
-          html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+          templateId : 'd-95110ce9a5754981bef94bafb6ed9e1c',
+          dynamic_template_data : { nombre }
         }
         sgMail
           .send(msg)
