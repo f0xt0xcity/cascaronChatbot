@@ -55,7 +55,6 @@ app.post('/webhook', express.json() ,function ( req, res ) {
      let pokemon = req.body.queryResult.parameters.pokemon;
      try {
        agent.add('Aquí tienes la información');
-       agent.add(`${Math.round(Math.random()*(151-0)+parseInt(0))}`)
        await fetch(`https://pokeapi.co/api/v2/pokemon/${ pokemon }`)
       .then(promesaFetch => promesaFetch.json())
       .then(contenido => { respuesta = contenido });
@@ -69,7 +68,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
          })  
        );
        
-       let payLoad = {
+       let payloadData = {
                 "richContent": [
                     [
                         {
@@ -78,7 +77,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
                             "rawUrl": respuesta.sprites.front_default
                         },
                         {
-                            "subtitle": texto,
+                            "subtitle": `Mas informacion sobre ${ pokemon }`,
                             "actionLink": `https://www.google.com/search?q=${ pokemon }`,
                             "title": `Mas informacion sobre ${ pokemon }`,
                             "type": "info"
@@ -86,9 +85,11 @@ app.post('/webhook', express.json() ,function ( req, res ) {
                     ]
                 ]
             }
+      agent.add( new Payload( agent.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPayload : true }));
+       
      } catch(err) {
        console.log(err);
-       agent.add(`No se ha encontrado el pokemon ${ pokemon }`)
+       agent.add(`No se ha encontrado el pokémon ${ pokemon }`)
        }
     }
   
@@ -103,10 +104,29 @@ app.post('/webhook', express.json() ,function ( req, res ) {
        agent.add(  new Card({
          title : `${respuesta.name}`,
          imageUrl : respuesta.sprites.front_default,
-         text : `Hola mi nombre es ${ respuesta.name } y soy un pokemon`,
+         text : `Hola mi nombre es ${ respuesta.name } y soy un pokémon`,
          buttonText : `Mas informacion sobre ${ respuesta.name }`,
          buttonUrl : `https://www.google.com/search?q=${ respuesta.name }`
-       })  );
+       })  
+    );
+       let payloadData = {
+                "richContent": [
+                    [
+                        {
+                            "type": "image",
+                            "accessibilityText": "Dialogflow across platforms",
+                            "rawUrl": respuesta.sprites.front_default
+                        },
+                        {
+                            "subtitle": `Mas informacion sobre ${ respuesta.name }`,
+                            "actionLink": `https://www.google.com/search?q=${ respuesta.name }`,
+                            "title": `Mas informacion sobre ${ respuesta.name }`,
+                            "type": "info"
+                        }
+                    ]
+                ]
+            }
+      agent.add( new Payload( agent.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPayload : true }));
      } catch(err) {
        console.log(err);
        agent.add(`Por el momento no puedo darte información`)
@@ -114,7 +134,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
   }
   
   function testRichResponse( agent ){
-    agent.add('respuesta enriquecida');
+    agent.add('Puedo ayudarte con esto');
     let payloadData ={
     "richContent": [
         [
@@ -125,10 +145,10 @@ app.post('/webhook', express.json() ,function ( req, res ) {
                 "text": "Realizar un reporte"
               },
               {
-                "text": "Quiero informacion sobre un pokemon"
+                "text": "Quiero informacion sobre un pokémon"
               },
               {
-                "text": "Pokemon al azar"
+                "text": "Pokémon al azar"
               }
             ]
           }
