@@ -93,6 +93,11 @@ app.post('/webhook', express.json() ,function ( req, res ) {
        agent.add(`Por el momento no puedo darte información`)
        }
   }
+  
+  function testRichResponse( agent ){
+    agent.add('Mensaje enriquecido');
+    agent.add( new Suggestion('Quiero levantar un reporte'));
+  }
 
     // Run the proper function handler based on the matched Dialogflow intent name
     let intentMap = new Map();
@@ -101,6 +106,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     intentMap.set('prueba', prueba);
     intentMap.set('api', api);
     intentMap.set('pokemonAzar', pokemonAzar);
+    intentMap.set('testRichResponse', testRichResponse);
 
     agent.handleRequest(intentMap);
 });
