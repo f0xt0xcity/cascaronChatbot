@@ -7,6 +7,12 @@ const ChatbotUserSchema = new Schema(
   {
     firstName : String,
     email : String,
+    asunt : String,
+    complete : {
+      type : Boolean,
+      default : false
+    }
+    
   }, { timestamps : true }
 );
 

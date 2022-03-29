@@ -35,10 +35,12 @@ app.post('/webhook', express.json() ,function ( req, res ) {
     async function prueba(agent) {
         let nombre = req.body.queryResult.parameters.firstName;
         let correo = req.body.queryResult.parameters.email;
+        let asunto = req.body.queryResult.parameters.asunt;
       
         let chatbotUser = new ChatbotUser({
           firstName : nombre,
           email : correo,
+          asunt : asunto
         });
         try {
           let reg = await chatbotUser.save();
@@ -46,7 +48,7 @@ app.post('/webhook', express.json() ,function ( req, res ) {
         } catch ( err ) {
           console.log( err );
         }
-        agent.add(`Tu nombre es ${ nombre } y tu email es ${ correo }`)
+        agent.add(`Gracias ${ nombre }, se ha enviado un comprobante de tu problema a ${ correo }.`)
     }
   
    async function api(agent){
