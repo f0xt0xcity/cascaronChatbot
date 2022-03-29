@@ -89,7 +89,29 @@ app.post('/webhook', express.json() ,function ( req, res ) {
        
      } catch(err) {
        console.log(err);
-       agent.add(`No se ha encontrado el pokémon ${ pokemon }`)
+       agent.add(`No se ha encontrado el pokémon ${ pokemon }, pero puedo ayudarte con esto`);
+       let payloadData ={
+          "richContent": [
+              [
+                {
+                  "type": "chips",
+                  "options": [
+                    {
+                      "text": "Realizar un reporte"
+                    },
+                    {
+                      "text": "Quiero informacion sobre un pokémon"
+                    },
+                    {
+                      "text": "Pokémon al azar"
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+
+      agent.add( new Payload( agent.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPayload : true }));
        }
     }
   
@@ -129,7 +151,29 @@ app.post('/webhook', express.json() ,function ( req, res ) {
       agent.add( new Payload( agent.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPayload : true }));
      } catch(err) {
        console.log(err);
-       agent.add(`Por el momento no puedo darte información`)
+       agent.add(`Por el momento no puedo darte información, pero puedo ayudarte con esto`);
+       let payloadData ={
+          "richContent": [
+              [
+                {
+                  "type": "chips",
+                  "options": [
+                    {
+                      "text": "Realizar un reporte"
+                    },
+                    {
+                      "text": "Quiero informacion sobre un pokémon"
+                    },
+                    {
+                      "text": "Pokémon al azar"
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+
+      agent.add( new Payload( agent.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPayload : true }));
        }
   }
   
