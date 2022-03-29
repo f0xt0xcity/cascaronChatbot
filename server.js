@@ -59,13 +59,33 @@ app.post('/webhook', express.json() ,function ( req, res ) {
        await fetch(`https://pokeapi.co/api/v2/pokemon/${ pokemon }`)
       .then(promesaFetch => promesaFetch.json())
       .then(contenido => { respuesta = contenido });
-       agent.add(  new Card({
+       agent.add(  
+         new Card({
          title : `${respuesta.name}`,
          imageUrl : respuesta.sprites.front_default,
          text : `Hola mi nombre es ${ pokemon } y soy un pokemon`,
          buttonText : `Mas informacion sobre ${ pokemon }`,
          buttonUrl : `https://www.google.com/search?q=${ pokemon }`
-       })  );
+         })  
+       );
+       
+       let payLoad = {
+                "richContent": [
+                    [
+                        {
+                            "type": "image",
+                            "accessibilityText": "Dialogflow across platforms",
+                            "rawUrl": respuesta.sprites.front_default
+                        },
+                        {
+                            "subtitle": texto,
+                            "actionLink": `https://www.google.com/search?q=${ pokemon }`,
+                            "title": `Mas informacion sobre ${ pokemon }`,
+                            "type": "info"
+                        }
+                    ]
+                ]
+            }
      } catch(err) {
        console.log(err);
        agent.add(`No se ha encontrado el pokemon ${ pokemon }`)
@@ -96,28 +116,28 @@ app.post('/webhook', express.json() ,function ( req, res ) {
   function testRichResponse( agent ){
     agent.add('respuesta enriquecida');
     let payloadData ={
-  "richContent": [
-    [
-      {
-        "type": "chips",
-        "options": [
+    "richContent": [
+        [
           {
-            "text": "Realizar un reporte"
-          },
-          {
-            "text": "Quiero informacion sobre un pokemon"
-          },
-          {
-            "text": "Pokemon al azar"
+            "type": "chips",
+            "options": [
+              {
+                "text": "Realizar un reporte"
+              },
+              {
+                "text": "Quiero informacion sobre un pokemon"
+              },
+              {
+                "text": "Pokemon al azar"
+              }
+            ]
           }
         ]
-      }
-    ]
-  ]
-}
+      ]
+    }
 
-agent.add( new Payload( platform.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPAyload : true }));
-  }
+  agent.add( new Payload( agent.UNSPECIFIED, payloadData, { sendAsMessage: true, rawPayload : true }));
+    }
 
     // Run the proper function handler based on the matched Dialogflow intent name
     let intentMap = new Map();
